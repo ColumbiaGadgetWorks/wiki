@@ -1,0 +1,35 @@
+services:
+  mediawiki:
+    image: mediawiki:1.45
+    container_name: mediawiki_app
+    profiles:
+     - dev
+     - prod
+    restart: always
+    ports:
+      - 8080:80
+    volumes:
+      - mediawiki_images:/var/www/html/images
+      # Note: Leave the line below commented out for the initial run!
+      # - ./LocalSettings.php:/var/www/html/LocalSettings.php
+    environment:
+      MEDIAWIKI_DB_HOST: db
+      MEDIAWIKI_DB_USER: ${WIKI_APP_USER}
+      MEDIAWIKI_DB_PASSWORD: ${WIKI_APP_PASSWORD}
+      MEDIAWIKI_DB_NAME: ${DATABASE_NAME}
+
+  db:
+    image: mariadb:11.8.8
+    container_name: mediawiki_db
+    profiles: 
+     - dev
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DATABASE_NAME}
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  mediawiki_images:
+  db_data:
