@@ -27,8 +27,13 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: ${DATABASE_NAME}
+      WIKI_SCHEMA_USER: ${WIKI_SCHEMA_USER}
+      WIKI_SCHEMA_PASSWORD: ${WIKI_SCHEMA_PASSWORD}
+      WIKI_APP_USER: ${WIKI_APP_USER}
+      WIKI_APP_PASSWORD: ${WIKI_APP_PASSWORD}
     volumes:
       - db_data:/var/lib/mysql
+      - ./create_users.sh:/docker-entrypoint-initdb.d/init.sh
 
 volumes:
   mediawiki_images:

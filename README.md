@@ -14,3 +14,5 @@ run `./create_users.sh` and copy the SQL into the mariaDB console.
 
 ### development
 copy `dev.env` into `.env`  
+
+docker compose --profile dev up
