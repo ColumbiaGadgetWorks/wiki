@@ -10,5 +10,7 @@ If no `.env` file exists, `dev.env` can be copied and the following values can b
  - `WIKI_SCHEMA_PASSWORD` Change to secure password matching `wiki_schema` user login
  - `WIKI_APP_PASSWORD` Change to secure password matching `wiki_app` user login
 
+run `./create_users.sh` and copy the SQL into the mariaDB console.
+
 ### development
 copy `dev.env` into `.env`  
