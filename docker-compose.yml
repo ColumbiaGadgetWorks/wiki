@@ -19,7 +19,7 @@ services:
       MEDIAWIKI_DB_NAME: ${DATABASE_NAME}
 
   db:
-    image: mariadb:11.8.8
+    image: mariadb:11.8
     container_name: mediawiki_db
     profiles: 
      - dev
