@@ -55,21 +55,45 @@ docker compose --profile dev up
 
 ## Database  
   
-MariaDB is the database. [Version compatability with mediawiki can be found here.](https://www.mediawiki.org/wiki/Special:MyLanguage/Compatibility#Database)
+The latest version of MariaDB compatible with mediawiki at the time was selected for the database. [Version compatability with mediawiki can be found here.](https://www.mediawiki.org/wiki/Special:MyLanguage/Compatibility#Database)  
+  
+### Users  
+  
+ - wiki_app: can read/write rows to database tables. These capabilities should be able to resolve most issues
+ - wiki_schema: in addition to wiki_app's priveleges, this user can also modify tables. Use with caution.
 
-On linux, it can be accessed by installing the client.
+### Production Access
+
+When troubleshooting, first verify that the mariaDB service is running.  
+
+The docker image in the dev environment comes with a mariadb client. It can be accessed via:
+
+```shell
+docker exec -it mediawiki_db mariadb -h <HOST_IP> -u wiki_app -p
+```
+
+On linux, the mariadb client can be installed via:
 ```shell
 sudo apt install mariadb-client
 ```
 
-Then logging in as wiki_schema.
+Then logging in as wiki_schema which will have full access to the wiki's database.
 
 ```shell
-mysql -h <HOST_IP> -P 3306 -u wiki_schema -p
+mariadb -h <HOST_IP> -P 3306 -u wiki_app -p
 ```
 
-The docker image int the dev environment comes with a mariadb client. It can be accessed via:
+If using TrueNAS shell  
 
 ```shell
-docker exec -it mediawiki_db mariadb -h <HOST_IP> -u wiki_schema -p
+sudo docker exec -it ix-mariadb-mariadb-1 mariadb -u wiki_app -p
 ```
+
+To inspect the mariadb container,
+```shell
+sudo docker ps -a | grep -i mariadb
+```
+
+### Test Environment Access  
+  
+
