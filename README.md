@@ -52,7 +52,7 @@ The mariaDB user/group then needs to be given ownership of this dataset via `cho
 ### development
 Again copy `dev.env` into `.env`  
 
-docker compose --profile dev up
+`docker compose --profile dev up`
 
 ## Database  
   
@@ -96,5 +96,15 @@ sudo docker ps -a | grep -i mariadb
 ```
 
 ### Test Environment Access  
-  
+```shell
+sudo docker exec -it db mariadb -u wiki_app -p
+```
 
+## Test Environment
+  The wiki admin test account is `admin` with password `1234567890`.
+
+### Common Commands
+Reset Containers
+```shell
+sudo docker compose --profile dev down -v && sudo docker compose --profile dev up -d --build
+```
