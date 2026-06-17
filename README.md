@@ -52,7 +52,10 @@ The mariaDB user/group then needs to be given ownership of this dataset via `cho
 ### development
 Again copy `dev.env` into `.env`  
 
-`docker compose --profile dev up`
+`docker compose --profile dev up`  
+  
+The mariadb image takes longer to initialize so manually run this command about 30 seconds after it starts for the first time  
+`sudo docker exec -it mediawiki_app php /tmp/setup_database.php`  
 
 ## Database  
   
