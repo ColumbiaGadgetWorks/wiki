@@ -97,7 +97,7 @@ sudo docker ps -a | grep -i mariadb
 
 ### Test Environment Access  
 ```shell
-sudo docker exec -it db mariadb -u wiki_app -p
+sudo docker exec -it mediawiki_db mariadb -u wiki_app -p
 ```
 
 ## Test Environment
