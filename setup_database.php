@@ -46,5 +46,3 @@ if ($mysqlClient->error) {
 
 $mysqlClient->query("GRANT SELECT, INSERT, UPDATE, DELETE ON {$envVariables['DATABASE_NAME']}.* TO '{$envVariables['WIKI_DB_APP_USER']}'@'%';");
 $mysqlClient->query("FLUSH PRIVILEGES");
-
-echo "INFO: Done.\n";
