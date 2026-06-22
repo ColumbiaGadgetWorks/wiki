@@ -51,7 +51,7 @@ database_init () {
     # php maintenance/run.php installPreConfigured
     php /tmp/setup_database.php
   else
-    log okay "Database already initialized, skipping install"
+    log okay 'Database already initialized, skipping install'
   fi
 }
 
@@ -60,15 +60,15 @@ exponential_backoff_database_init () {
   local wait=$INITIAL_WAIT_SECONDS
 
   while [ $attempt -le $MAX_ATTEMPTS ]; do
-    log info "initializing database"
+    log info 'Initializing database'
     database_init
 
     if [ $? -eq 0 ]; then
-      log okay "Database initialized"
+      log okay 'Database initialized'
       return 0
     fi
 
-    log warn "database init failed on attempt $attempt."
+    log warn "Database init failed on attempt $attempt."
 
     if [ $attempt -lt $MAX_ATTEMPTS ]; then
       log info "Retrying in ${wait}s..."
@@ -79,10 +79,17 @@ exponential_backoff_database_init () {
     attempt=$((attempt + 1))
   done
 
-  log fail "All $MAX_ATTEMPTS attempts failed. Giving up."
-  exit 1
+  return 1
 }
 
-exponential_backoff_database_init
+if ! exponential_backoff_database_init; then
+  log fail "All $MAX_ATTEMPTS attempts failed. Giving up."
+  exit 1
+fi
 
-# php maintenance/run.php update --quiet
+# if ! php maintenance/run.php update --quiet; then
+#   log fail 'MediaWiki update failed, aborting startup' >&2
+#   exit 1
+# fi
+
+exec apache2-foreground
