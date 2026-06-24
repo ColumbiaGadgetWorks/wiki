@@ -43,25 +43,17 @@ function log () {
   esac
 }
 
-database_init () {
-  local table_exists=$(mysql -h "$DATABASE_NAME" -u "$WIKI_DB_SCHEMA_USER" -p"$WIKI_DB_SCHEMA_PASSWORD" -N -B \
-  -e "SHOW TABLES LIKE 'user';" "$DATABASE_NAME" 2>/dev/null)
-
-  if [ -z "$table_exists" ]; then
-    # php maintenance/run.php installPreConfigured
-    php /tmp/setup_database.php
-  else
-    log okay 'Database already initialized, skipping install'
-  fi
+create_database_resources () {
+  php /tmp/setup_database.php
 }
 
-exponential_backoff_database_init () {
+exponential_backoff_create_database_resources () {
   local attempt=1
   local wait=$INITIAL_WAIT_SECONDS
 
   while [ $attempt -le $MAX_ATTEMPTS ]; do
     log info 'Initializing database'
-    database_init
+    create_database_resources
 
     if [ $? -eq 0 ]; then
       log okay 'Database initialized'
@@ -82,14 +74,39 @@ exponential_backoff_database_init () {
   return 1
 }
 
-if ! exponential_backoff_database_init; then
-  log fail "All $MAX_ATTEMPTS attempts failed. Giving up."
+update_mediawiki () {
+  log info 'Updating'
+
+  if ! php maintenance/run.php update --quiet; then
+    log fail 'MediaWiki update failed, aborting startup' >&2
+    exit 1
+  fi
+}
+
+CREATE_DATABASE_RESOURCES_RESULT=$(exponential_backoff_create_database_resources | tee /dev/tty)
+
+if [ $? -ne 0 ]; then
+  log fail "Maximum number of attempts failed. Exiting."
+  log info "$CREATE_DATABASE_RESOURCES_RESULT"
   exit 1
 fi
 
-# if ! php maintenance/run.php update --quiet; then
-#   log fail 'MediaWiki update failed, aborting startup' >&2
-#   exit 1
-# fi
+log info "$CREATE_DATABASE_RESOURCES_RESULT"
+
+if echo "$CREATE_DATABASE_RESOURCES_RESULT" | grep -q 'A user table was found'; then
+  log info 'A user table was found in the database and the database is assumed to be set up.'
+
+  update_mediawiki
+elif echo "$CREATE_DATABASE_RESOURCES_RESULT" | grep -q 'A user table was not found'; then
+  log info 'A user table was not found in the database and the schema is assumed to be not set up.'
+
+  log info 'Setting up schema'
+  php maintenance/run.php installPreConfigured "$WIKI_ADMIN_USER" "$WIKI_ADMIN_PASSWORD"
+
+  update_mediawiki
+else
+  log fail 'Failed to assess status of database. Exiting'
+  exit 1
+fi
 
 exec apache2-foreground
