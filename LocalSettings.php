@@ -15,10 +15,27 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit;
 }
 
+$envVariables = [];
+
+$envVariables['DATABASE_HOST'] = getenv('DATABASE_HOST');
+$envVariables['DATABASE_NAME'] = getenv('DATABASE_NAME');
+$envVariables['WIKI_DB_APP_USER'] = getenv('WIKI_DB_APP_USER');
+$envVariables['WIKI_DB_APP_PASSWORD'] = getenv('WIKI_DB_APP_PASSWORD');
+$envVariables['WIKI_DB_SCHEMA_USER'] = getenv('WIKI_DB_SCHEMA_USER');
+$envVariables['WIKI_DB_SCHEMA_PASSWORD'] = getenv('WIKI_DB_SCHEMA_PASSWORD');
+
+$missingEnvVariables = implode(', ', array_keys($envVariables, false, true));
+
+if (strlen($missingEnvVariables)) {
+  fwrite(STDERR, "FAIL: One or more required environment variables are missing.\n");
+  fwrite(STDERR, "  Missing variables are: {$missingEnvVariables}\n");
+  exit(1);
+}
+
 ## Uncomment this to disable output compression
 # $wgDisableOutputCompression = true;
 
-$wgSitename = "CGWiki";
+$wgSitename = "ColumbiaGadgetWiki";
 
 ## The URL base path to the directory containing the wiki;
 ## defaults for all runtime URL paths are based off of this.
@@ -54,10 +71,12 @@ $wgEmailAuthentication = true;
 
 ## Database settings
 $wgDBtype = "mysql";
-$wgDBserver = "db";
-$wgDBname = "wiki";
-$wgDBuser = "wiki_schema";
-$wgDBpassword = "schemasecret";
+$wgDBserver = $envVariables['DATABASE_HOST'];
+$wgDBname = $envVariables['DATABASE_NAME'];
+$wgDBadminuser = $envVariables['WIKI_DB_SCHEMA_USER'];
+$wgDBadminpassword = $envVariables['WIKI_DB_SCHEMA_PASSWORD'];
+$wgDBuser = $envVariables['WIKI_DB_APP_USER'];
+$wgDBpassword = $envVariables['WIKI_DB_APP_PASSWORD'];
 
 # MySQL specific settings
 $wgDBprefix = "";

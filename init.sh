@@ -5,14 +5,15 @@ INITIAL_WAIT_SECONDS=12
 
 # Set colors if available
 if test -t 1; then # if terminal
-    ncolors=$(which tput > /dev/null && tput colors) # supports color
-    if test -n "$ncolors" && test $ncolors -ge 8; then
-        cyan="$(tput setaf 6)"
-        green="$(tput setaf 2)"
-        normal="$(tput sgr0)"
-        red="$(tput setaf 1)"
-        yellow="$(tput setaf 3)"
-    fi
+  ncolors=$(which tput > /dev/null && tput colors) # supports color
+
+  if test -n "$ncolors" && test $ncolors -ge 8; then
+    cyan="$(tput setaf 6)"
+    green="$(tput setaf 2)"
+    normal="$(tput sgr0)"
+    red="$(tput setaf 1)"
+    yellow="$(tput setaf 3)"
+  fi
 fi
 
 # Colorized output
