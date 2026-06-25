@@ -8,10 +8,11 @@ These values in the `.env` copied from `dev.env` can be editied for secure datab
 
  - `DATABASE_HOST`: The host for the mariaDB database.
  - `MYSQL_ROOT_PASSWORD` Change to a secure password.
- - `WIKI_SCHEMA_PASSWORD` Change to a secure password.
+ - `WIKI_ADMIN_PASSWORD` Change to a secure password.
  - `WIKI_APP_PASSWORD` Change to a secure password.
+ - `WIKI_SCHEMA_PASSWORD` Change to a secure password.
 
-run `./create_users.sh` and run the output SQL into the mariaDB console as root.
+`docker compose --profile prod up`  
 
 #### MariaDB
 A standalone mariadb has been created for this.  
@@ -54,8 +55,7 @@ Again copy `dev.env` into `.env`
 
 `docker compose --profile dev up`  
   
-The mariadb image takes longer to initialize so manually run this command about 30 seconds after it starts for the first time  
-`sudo docker exec -it mediawiki_app php /tmp/setup_database.php`  
+The mariadb image takes longer to initialize so simply wait around 40 seconds. You can check the logs for the app container for progess.
 
 ## Database  
   
@@ -63,6 +63,7 @@ The latest version of MariaDB compatible with mediawiki at the time was selected
   
 ### Users  
   
+ - root: access to everything
  - wiki_app: can read/write rows to database tables. These capabilities should be able to resolve most issues
  - wiki_schema: in addition to wiki_app's priveleges, this user can also modify tables. Use with caution.
 
@@ -100,14 +101,33 @@ sudo docker ps -a | grep -i mariadb
 
 ### Test Environment Access  
 ```shell
-sudo docker exec -it mediawiki_db mariadb -u wiki_app -p
+# As root
+sudo docker exec -it mediawiki_db mariadb -u root -psupersecret
+
+# Connect to the database as the app user
+sudo docker exec -it mediawiki_db mariadb -u wiki_app -pappsecret wiki
 ```
 
 ## Test Environment
   The wiki admin test account is `admin` with password `1234567890`.
 
-### Common Commands
+## Common Commands  
+
+Show logs for the app  
+```shell
+sudo docker logs mediawiki_app
+```
+  
+Run a command in the mediawiki app container
+```shell
+sudo docker exec -it mediawiki_app <YOUR_COMMAND_HERE>
+```
+
 Reset Containers
 ```shell
+# dev
 sudo docker compose --profile dev down -v && sudo docker compose --profile dev up -d --build
+
+# prod
+sudo docker compose --profile prod down -v && sudo docker compose --profile prod up -d --build
 ```
