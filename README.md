@@ -1,8 +1,8 @@
-## installation
+## Installation
 
 A file named `.env` is required to set the database credentials. `dev.env` can be copied into `.env` to create one.
 
-### production
+### Production
 
 These values in the `.env` copied from `dev.env` can be editied for secure database access:
 
@@ -14,10 +14,9 @@ These values in the `.env` copied from `dev.env` can be editied for secure datab
 
 `docker compose --profile prod up`  
 
-#### MariaDB
-A standalone mariadb has been created for this.  
-
-First a TrueNAS dataset was created with default settings named mariadb.
+#### MariaDB  
+  
+A TrueNAS dataset was created with default settings named `mariadb`.
 
 The mariaDB app was installed through the TrueNAS app store using the following settings.
 
@@ -55,7 +54,7 @@ Again copy `dev.env` into `.env`
 
 `docker compose --profile dev up`  
   
-The mariadb image takes longer to initialize so simply wait around 40 seconds. You can check the logs for the app container for progess.
+The mariadb image takes around 40 seconds to initialize. You can check the logs for the app container to see progess.
 
 ## Database  
   
@@ -69,23 +68,10 @@ The latest version of MariaDB compatible with mediawiki at the time was selected
 
 ### Production Access
 
-When troubleshooting, first verify that the mariaDB service is running.  
-
 The docker image in the dev environment comes with a mariadb client. It can be accessed via:
 
 ```shell
 docker exec -it mediawiki_db mariadb -h <HOST_IP> -u wiki_app -p
-```
-
-On linux, the mariadb client can be installed via:
-```shell
-sudo apt install mariadb-client
-```
-
-Then logging in as wiki_schema which will have full access to the wiki's database.
-
-```shell
-mariadb -h <HOST_IP> -P 3306 -u wiki_app -p
 ```
 
 If using TrueNAS shell  
@@ -94,7 +80,7 @@ If using TrueNAS shell
 sudo docker exec -it ix-mariadb-mariadb-1 mariadb -u wiki_app -p
 ```
 
-To inspect the mariadb container,
+To inspect the mariadb container, in the TrueNAS shell
 ```shell
 sudo docker ps -a | grep -i mariadb
 ```
@@ -108,7 +94,7 @@ sudo docker exec -it mediawiki_db mariadb -u root -psupersecret
 sudo docker exec -it mediawiki_db mariadb -u wiki_app -pappsecret wiki
 ```
 
-## Test Environment
+## Test Environment App
   The wiki admin test account is `admin` with password `1234567890`.
 
 ## Common Commands  
