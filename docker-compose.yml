@@ -1,6 +1,6 @@
 services:
   mediawiki:
-    image: mediawiki:1.45
+    build: .
     container_name: mediawiki_app
     profiles:
      - dev
@@ -13,9 +13,6 @@ services:
       - "/init.sh"
     volumes:
       - mediawiki_images:/var/www/html/images
-      - ./LocalSettings.php:/var/www/html/LocalSettings.php
-      - ./init.sh:/init.sh
-      - ./setup_database.php:/tmp/setup_database.php:ro
     environment:
       DATABASE_HOST: ${DATABASE_HOST}
       DATABASE_NAME: ${DATABASE_NAME}
