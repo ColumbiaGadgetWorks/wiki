@@ -113,4 +113,6 @@ else
   exit 1
 fi
 
+unset MYSQL_ROOT_PASSWORD
+
 exec apache2-foreground
