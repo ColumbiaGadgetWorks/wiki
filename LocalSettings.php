@@ -15,6 +15,10 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit;
 }
 
+if ( ! defined( 'STDERR' ) ) {
+  define( 'STDERR', fopen( 'php://stderr', 'wb' ) );
+}
+
 $envVariables = [];
 
 $envVariables['DATABASE_HOST'] = getenv('DATABASE_HOST');
