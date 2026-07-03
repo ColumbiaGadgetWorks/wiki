@@ -117,4 +117,4 @@ fi
 
 unset MYSQL_ROOT_PASSWORD
 
-exec apache2-foreground
+exec docker-php-entrypoint apache2-foreground
