@@ -84,6 +84,8 @@ update_mediawiki () {
   fi
 }
 
+echo "TEST"
+
 CREATE_DATABASE_RESOURCES_RESULT=$(exponential_backoff_create_database_resources | tee /dev/tty)
 
 if [ $? -ne 0 ]; then
