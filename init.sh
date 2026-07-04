@@ -94,12 +94,8 @@ if [ $? -ne 0 ]; then
 fi
 
 if echo "$CREATE_DATABASE_RESOURCES_RESULT" | grep -q 'A user table was found'; then
-  log info 'A user table was found in the database and the database is assumed to be set up.'
-
   update_mediawiki
 elif echo "$CREATE_DATABASE_RESOURCES_RESULT" | grep -q 'A user table was not found'; then
-  log info 'A user table was not found in the database and the schema is assumed to be not set up.'
-
   log info 'Setting up schema'
   php maintenance/run.php installPreConfigured "$WIKI_ADMIN_USER" "$WIKI_ADMIN_PASSWORD"
 
