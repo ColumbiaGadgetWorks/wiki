@@ -84,17 +84,14 @@ update_mediawiki () {
   fi
 }
 
-echo "TEST"
+log info 'Setting up mediawiki'
 
 CREATE_DATABASE_RESOURCES_RESULT=$(exponential_backoff_create_database_resources | tee /dev/tty)
 
 if [ $? -ne 0 ]; then
   log fail "Maximum number of attempts failed. Exiting."
-  log info "$CREATE_DATABASE_RESOURCES_RESULT"
   exit 1
 fi
-
-log info "$CREATE_DATABASE_RESOURCES_RESULT"
 
 if echo "$CREATE_DATABASE_RESOURCES_RESULT" | grep -q 'A user table was found'; then
   log info 'A user table was found in the database and the database is assumed to be set up.'
