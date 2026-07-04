@@ -97,7 +97,7 @@ if echo "$CREATE_DATABASE_RESOURCES_RESULT" | grep -q 'A user table was found'; 
   update_mediawiki
 elif echo "$CREATE_DATABASE_RESOURCES_RESULT" | grep -q 'A user table was not found'; then
   log info 'Setting up schema'
-  php maintenance/run.php installPreConfigured "$WIKI_ADMIN_USER" "$WIKI_ADMIN_PASSWORD"
+  php maintenance/run.php installPreConfigured
 
   log info 'Creating admin user'
   php maintenance/run.php createAndPromote --bureaucrat --sysop --force "$WIKI_ADMIN_USER" "$WIKI_ADMIN_PASSWORD"
