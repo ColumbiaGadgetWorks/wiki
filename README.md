@@ -49,6 +49,41 @@ Memory: 2048
 
 The mariaDB user/group then needs to be given ownership of this dataset via `chown -R 999:999 /mnt/data/mariadb` from the shell.
 
+#### Custom App Container Configuration for the Wiki  
+  
+A custom app was created for the wiki using the UI with the following settings:
+
+```
+Application Name: wiki
+
+Repository: ghcr.io/columbiagadgetworks/wiki
+Tag: latest
+Pull Policy: Pull the image if it is not already present on the host.
+
+Timezone: 'America/Chicago' timezone
+
+Environment Variables: See the shared secrets vault for these values
+DATABASE_NAME:
+MYSQL_ROOT_PASSWORD:
+WIKI_ADMIN_USER:
+WIKI_ADMIN_PASSWORD:
+WIKI_DB_APP_USER:
+WIKI_DB_APP_PASSWORD:
+WIKI_DB_SCHEMA_USER:
+WIKI_DB_SCHEMA_PASSWORD:
+DATABASE_HOST:
+
+Restart Policy: Unless Stopped - Restarts the container irrespective of the exit code but stops restarting when the service is stopped or removed.
+
+TTY: Checked
+
+Ports:
+  Port Bind Mode: Publish port on the host for external access
+  Host Port: 8090
+  Container Port: 80
+  Protocol: TCP
+```
+
 ### development
 Again copy `dev.env` into `.env`  
 
@@ -77,7 +112,11 @@ docker exec -it mediawiki_db mariadb -h <HOST_IP> -u wiki_app -p
 If using TrueNAS shell  
 
 ```shell
+# as the wiki app user
 sudo docker exec -it ix-mariadb-mariadb-1 mariadb -u wiki_app -p
+
+# as root. Use with caution
+sudo docker exec -it ix-mariadb-mariadb-1 mariadb -u root -p
 ```
 
 To inspect the mariadb container, in the TrueNAS shell
@@ -99,6 +138,13 @@ sudo docker exec -it mediawiki_db mariadb -u wiki_app -pappsecret wiki
 
 ## Common Commands  
 
+List docker containers
+```shell
+sudo docker ps -a
+```
+
+### Development  
+  
 Show logs for the app  
 ```shell
 sudo docker logs mediawiki_app
@@ -111,9 +157,31 @@ sudo docker exec -it mediawiki_app <YOUR_COMMAND_HERE>
 
 Reset Containers
 ```shell
-# dev
 sudo docker compose --profile dev down -v && sudo docker compose --profile dev up -d --build
-
-# prod
-sudo docker compose --profile prod down -v && sudo docker compose --profile prod up -d --build
 ```
+
+### Production  
+  
+Show logs for the app  
+```shell
+sudo docker logs ix-wiki-wiki-1
+```
+
+Run a command in the mediawiki app container
+```shell
+sudo docker exec -it ix-wiki-wiki-1 <YOUR_COMMAND_HERE>
+```
+
+Sign in to the database as root
+```shell
+sudo docker exec -it ix-mariadb-mariadb-1 mariadb -u root -p
+```
+
+## Updating The App  
+  
+ - Make sure the image from ghcr is updated
+ - Go to the TrueNAS app dashboard
+ - go to Configuration -> Manage Docker Images  
+ - Delete the image from ghcr
+ - Go back to the app dashboard
+ - Start the app
