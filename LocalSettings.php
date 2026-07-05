@@ -15,6 +15,8 @@ if ( !defined( 'MEDIAWIKI' ) ) {
 	exit;
 }
 
+fwrite(STDERR, "Test");
+
 if ( ! defined( 'STDERR' ) ) {
   define( 'STDERR', fopen( 'php://stderr', 'wb' ) );
 }
