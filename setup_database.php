@@ -13,6 +13,10 @@ $envVariables['WIKI_DB_SCHEMA_PASSWORD'] = getenv('WIKI_DB_SCHEMA_PASSWORD');
 
 $missingEnvVariables = implode(', ', array_keys($envVariables, false, true));
 
+if ( ! defined( 'STDERR' ) ) {
+  define( 'STDERR', fopen( 'php://stderr', 'wb' ) );
+}
+
 if (strlen($missingEnvVariables)) {
   fwrite(STDERR, "FAIL: One or more required environment variables are missing.\n");
   fwrite(STDERR, "  Missing variables are: {$missingEnvVariables}\n");
