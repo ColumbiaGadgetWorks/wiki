@@ -27,6 +27,7 @@ $envVariables['WIKI_DB_APP_USER'] = getenv('WIKI_DB_APP_USER');
 $envVariables['WIKI_DB_APP_PASSWORD'] = getenv('WIKI_DB_APP_PASSWORD');
 $envVariables['WIKI_DB_SCHEMA_USER'] = getenv('WIKI_DB_SCHEMA_USER');
 $envVariables['WIKI_DB_SCHEMA_PASSWORD'] = getenv('WIKI_DB_SCHEMA_PASSWORD');
+$envVariables['WIKI_URL'] = getenv('WIKI_URL');
 
 $missingEnvVariables = implode(', ', array_keys($envVariables, false, true));
 
@@ -49,7 +50,7 @@ $wgSitename = "ColumbiaGadgetWiki";
 $wgScriptPath = "";
 
 ## The protocol and server name to use in fully-qualified URLs
-$wgServer = "http://localhost:8080";
+$wgServer = $envVariables['WIKI_URL'];
 
 ## The URL path to static resources (images, scripts, etc.)
 $wgResourceBasePath = $wgScriptPath;

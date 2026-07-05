@@ -63,6 +63,7 @@ Pull Policy: Pull the image if it is not already present on the host.
 Timezone: 'America/Chicago' timezone
 
 Environment Variables: See the shared secrets vault for these values
+DATABASE_HOST:
 DATABASE_NAME:
 MYSQL_ROOT_PASSWORD:
 WIKI_ADMIN_USER:
@@ -71,7 +72,7 @@ WIKI_DB_APP_USER:
 WIKI_DB_APP_PASSWORD:
 WIKI_DB_SCHEMA_USER:
 WIKI_DB_SCHEMA_PASSWORD:
-DATABASE_HOST:
+WIKI_URL:
 
 Restart Policy: Unless Stopped - Restarts the container irrespective of the exit code but stops restarting when the service is stopped or removed.
 
