@@ -184,6 +184,11 @@ Sign in to the database as root
 sudo docker exec -it ix-mariadb-mariadb-1 mariadb -u root -p
 ```
 
+Inspect the storage for the wiki images  
+```shell
+zfs list -r appdata | grep wiki
+```
+
 ## Updating The App  
   
  - Make sure the image from ghcr is updated
