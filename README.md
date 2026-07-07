@@ -83,6 +83,12 @@ Ports:
   Host Port: 8090
   Container Port: 80
   Protocol: TCP
+
+Storage Configuration:
+  This is the path inside the docker container where the images are stored. Found in docker-compose.yml
+  Mount Path: /var/www/html/images
+  Dataset Name: wiki-images
+
 ```
 
 ### development
