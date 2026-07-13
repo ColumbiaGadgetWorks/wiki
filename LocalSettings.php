@@ -55,6 +55,8 @@ $wgServer = $envVariables['WIKI_URL'];
 ## The URL path to static resources (images, scripts, etc.)
 $wgResourceBasePath = $wgScriptPath;
 
+$wgFavicon = "$wgResourceBasePath/resources/assets/favicon.ico";
+
 ## The URL paths to the logo.  Make sure you change this from the default,
 ## or else you'll overwrite your logo when you upgrade!
 $wgLogos = [
