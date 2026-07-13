@@ -3,17 +3,6 @@
 A file named `.env` is required to set the database credentials. `dev.env` can be copied into `.env` to create one.
 
 ### Production
-
-These values in the `.env` copied from `dev.env` can be editied for secure database access:
-
- - `DATABASE_HOST`: The host for the mariaDB database.
- - `MYSQL_ROOT_PASSWORD` Change to a secure password.
- - `WIKI_ADMIN_PASSWORD` Change to a secure password.
- - `WIKI_APP_PASSWORD` Change to a secure password.
- - `WIKI_SCHEMA_PASSWORD` Change to a secure password.
-
-`docker compose --profile prod up`  
-
 #### MariaDB  
   
 A TrueNAS dataset was created with default settings named `mariadb`.
@@ -89,6 +78,34 @@ Storage Configuration:
   Mount Path: /var/www/html/images
   Dataset Name: wiki-images
 
+```
+
+#### Logging  
+To limit the logs, a generic dataset was created called `log_storage_limit_init_script`  
+
+Then the following script was created in the dataset via the shell.  
+```shell
+{
+sudo tee /mnt/data/log_storage_limit_init_script/daemon-log-config.sh > /dev/null << 'EOF'
+#!/bin/bash
+systemctl stop docker
+jq '. + {"log-opts": {"max-size": "10m", "max-file": "3"}}' /etc/docker/daemon.json > /tmp/daemon.json
+mv /tmp/daemon.json /etc/docker/daemon.json
+systemctl start docker
+EOF
+} && sudo chmod +x /mnt/data/log_storage_limit_init_script/daemon-log-config.sh
+```
+
+To run the script, the configuration is found in TrueNAS's advanced settings under the Init/Shutdown Script section  
+  
+The form's fields/values are:  
+```
+Description: Confirgure Logging Storage Limits
+Type: Script
+Script: /mnt/data/log_storage_limit_init_script/daemon-log-config.sh
+When: Post Init
+Enabled: Checked
+Timeout: 120s
 ```
 
 ### development
