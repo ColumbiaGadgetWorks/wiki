@@ -39,7 +39,7 @@ Memory: 2048
 The mariaDB user/group then needs to be given ownership of this dataset via `chown -R 999:999 /mnt/data/mariadb` from the shell.
 
 #### Custom App Container Configuration for the Wiki  
-  
+
 A custom app was created for the wiki using the UI with the following settings:
 
 ```
@@ -78,6 +78,13 @@ Storage Configuration:
   Mount Path: /var/www/html/images
   Dataset Name: wiki-images
 
+```
+This will create a zfs dataset which will not appear in the UI. The location generated at the time of this writing is `/mnt/.ix-apps/app_mounts/wiki/wiki-images`.  
+This dataset will need its permissions changed to allow the wiki application user access which should be `www-data` which has a user id of `33`.  
+So to set the correct permissions, this command is run in the TrueNAS console.  
+
+```shell
+sudo chown -R 33:33 /mnt/.ix-apps/app_mounts/wiki/wiki-images && sudo chmod -R 775 /mnt/.ix-apps/app_mounts/wiki/wiki-images
 ```
 
 #### Logging  
