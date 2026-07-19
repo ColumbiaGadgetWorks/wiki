@@ -62,8 +62,8 @@ $wgFavicon = "$wgResourceBasePath/resources/assets/favicon.ico";
 $wgLogos = [
 ##	'1x' => "$wgResourceBasePath/resources/assets/change-your-logo.svg",
 ##	'icon' => "$wgResourceBasePath/resources/assets/change-your-logo.svg",
-	'1x' => "/wiki/images/7/79/cgw-logo-fixed.png",
-	'icon' => "/wiki/images/7/79/cgw-logo-fixed.png",
+	'1x' => "/wiki/images/7/79/Cgw-logo-fixed.png",
+	'icon' => "/wiki/images/7/79/Cgw-logo-fixed.png",
 ];
 
 ## UPO means: this is also a user preference option
