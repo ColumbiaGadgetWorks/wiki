@@ -1,4 +1,4 @@
-FROM mediawiki:1.45
+FROM mediawiki:1.46
 
 COPY LocalSettings.php /var/www/html/LocalSettings.php
 COPY init.sh /init.sh
