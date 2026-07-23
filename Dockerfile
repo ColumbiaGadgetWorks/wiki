@@ -1,5 +1,8 @@
 FROM mediawiki:1.46
 
+RUN git clone --branch REL1_46 https://github.com/wikimedia/mediawiki-extensions-DarkMode.git /var/www/html/extensions/DarkMode
+RUN chown -R www-data:www-data /var/www/html/extensions/DarkMode
+
 COPY LocalSettings.php /var/www/html/LocalSettings.php
 COPY init.sh /init.sh
 RUN chmod +x /init.sh
