@@ -1,0 +1,9 @@
+What is the memory limitation for logs?
+
+mount and configure custom logo: path like $wgResourceBasePath/resources/assets/change-your-logo.svg
+reverseproxy setup: https only
+
+Fatal error: Uncaught Error: Undefined constant "STDERR"
+
+Auto-update
+Auto backup

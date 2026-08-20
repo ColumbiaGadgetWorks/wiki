@@ -14,6 +14,9 @@ COPY disable-web-error-output.ini /usr/local/etc/php/conf.d/zz-disable-web-error
 COPY upload-limits.ini /usr/local/etc/php/conf.d/upload-limits.ini
 
 COPY assets/favicon.ico /var/www/html/resources/assets/favicon.ico
+COPY assets/Cgw-logo-1.5x.png /var/www/html/resources/assets/Cgw-logo-1.5x.png
+COPY assets/Cgw-logo-1x.png /var/www/html/resources/assets/Cgw-logo-1x.png
+COPY assets/Cgw-logo-icon.png /var/www/html/resources/assets/Cgw-logo-icon.png
 
 ENTRYPOINT ["/init.sh"]
 CMD ["apache2-foreground"]
