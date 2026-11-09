@@ -87,34 +87,6 @@ So to set the correct permissions, this command is run in the TrueNAS console.
 sudo chown -R 33:33 /mnt/.ix-apps/app_mounts/wiki/wiki-images && sudo chmod -R 775 /mnt/.ix-apps/app_mounts/wiki/wiki-images
 ```
 
-#### Logging  
-To limit the logs, a generic dataset was created called `log_storage_limit_init_script`  
-
-Then the following script was created in the dataset via the shell.  
-```shell
-{
-sudo tee /mnt/data/log_storage_limit_init_script/daemon-log-config.sh > /dev/null << 'EOF'
-#!/bin/bash
-systemctl stop docker
-jq '. + {"log-opts": {"max-size": "10m", "max-file": "3"}}' /etc/docker/daemon.json > /tmp/daemon.json
-mv /tmp/daemon.json /etc/docker/daemon.json
-systemctl start docker
-EOF
-} && sudo chmod +x /mnt/data/log_storage_limit_init_script/daemon-log-config.sh
-```
-
-To run the script, the configuration is found in TrueNAS's advanced settings under the Init/Shutdown Script section  
-  
-The form's fields/values are:  
-```
-Description: Confirgure Logging Storage Limits
-Type: Script
-Script: /mnt/data/log_storage_limit_init_script/daemon-log-config.sh
-When: Post Init
-Enabled: Checked
-Timeout: 120s
-```
-
 ### development
 Again copy `dev.env` into `.env`  
 
