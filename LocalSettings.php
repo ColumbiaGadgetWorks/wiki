@@ -20,6 +20,8 @@ $envVariables['WIKI_DB_APP_PASSWORD'] = getenv('WIKI_DB_APP_PASSWORD');
 $envVariables['WIKI_DB_SCHEMA_USER'] = getenv('WIKI_DB_SCHEMA_USER');
 $envVariables['WIKI_DB_SCHEMA_PASSWORD'] = getenv('WIKI_DB_SCHEMA_PASSWORD');
 $envVariables['WIKI_URL'] = getenv('WIKI_URL');
+$envVariables['WIKI_SECRET_KEY'] = getenv('WIKI_SECRET_KEY');
+$envVariables['WIKI_UPGRADE_KEY'] = getenv('WIKI_UPGRADE_KEY');
 
 $missingEnvVariables = implode(', ', array_keys($envVariables, false, true));
 
@@ -120,14 +122,14 @@ $wgLocaltimezone = "UTC";
 ## be publicly accessible from the web.
 #$wgCacheDirectory = "$IP/cache";
 
-$wgSecretKey = "2b3f98cfa9b5312a0c04e3b7b2567b4556a06873568fd489f5740b578297e5a3";
+$wgSecretKey = $envVariables['WIKI_SECRET_KEY'];
 
 # Changing this will log out all existing sessions.
 $wgAuthenticationTokenVersion = "1";
 
 # Site upgrade key. Must be set to a string (default provided) to turn on the
 # web installer while LocalSettings.php is in place
-$wgUpgradeKey = "2dd1963745208107";
+$wgUpgradeKey = $envVariables['WIKI_UPGRADE_KEY'];
 
 ## For attaching licensing metadata to pages, and displaying an
 ## appropriate copyright notice / icon. GNU Free Documentation

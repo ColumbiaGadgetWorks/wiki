@@ -62,6 +62,8 @@ WIKI_DB_APP_PASSWORD:
 WIKI_DB_SCHEMA_USER:
 WIKI_DB_SCHEMA_PASSWORD:
 WIKI_URL:
+WIKI_SECRET_KEY:
+WIKI_UPGRADE_KEY:
 
 Restart Policy: Unless Stopped - Restarts the container irrespective of the exit code but stops restarting when the service is stopped or removed.
 
