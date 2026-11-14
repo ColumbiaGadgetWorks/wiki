@@ -156,5 +156,7 @@ wfLoadSkin( 'Vector' );
 wfLoadExtension( 'DarkMode' );
 wfLoadExtension( 'SyntaxHighlight_GeSHi' );
 wfLoadExtension( 'WikiEditor' );
+wfLoadExtension( 'ParserFunctions' );
+$wgPFEnableStringFunctions = true;
 
 # Add more configuration options below.
