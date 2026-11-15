@@ -22,7 +22,6 @@ $envVariables['WIKI_DB_SCHEMA_PASSWORD'] = getenv('WIKI_DB_SCHEMA_PASSWORD');
 $envVariables['WIKI_URL'] = getenv('WIKI_URL');
 $envVariables['WIKI_SECRET_KEY'] = getenv('WIKI_SECRET_KEY');
 
-
 $missingEnvVariables = implode(', ', array_keys($envVariables, false, true));
 
 if (strlen($missingEnvVariables)) {
@@ -115,7 +114,7 @@ $wgPingback = true;
 $wgLanguageCode = "en";
 
 # Time zone
-$wgLocaltimezone = "UTC";
+$wgLocaltimezone = "America/Chicago";
 
 ## Set $wgCacheDirectory to a writable directory on the web server
 ## to make your wiki go slightly faster. The directory should not
