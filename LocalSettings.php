@@ -21,6 +21,7 @@ $envVariables['WIKI_DB_SCHEMA_USER'] = getenv('WIKI_DB_SCHEMA_USER');
 $envVariables['WIKI_DB_SCHEMA_PASSWORD'] = getenv('WIKI_DB_SCHEMA_PASSWORD');
 $envVariables['WIKI_URL'] = getenv('WIKI_URL');
 $envVariables['WIKI_SECRET_KEY'] = getenv('WIKI_SECRET_KEY');
+$envVariables['WIKI_SESSION_SECRET'] = getenv('WIKI_SESSION_SECRET');
 
 $missingEnvVariables = implode(', ', array_keys($envVariables, false, true));
 
@@ -122,6 +123,7 @@ $wgLocaltimezone = "America/Chicago";
 #$wgCacheDirectory = "$IP/cache";
 
 $wgSecretKey = $envVariables['WIKI_SECRET_KEY'];
+$wgSessionSecret = $envVariables['WIKI_SESSION_SECRET'];
 
 # Changing this will log out all existing sessions.
 $wgAuthenticationTokenVersion = "1";
