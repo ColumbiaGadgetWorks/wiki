@@ -1,7 +1,4 @@
 ## Installation
-
-A file named `.env` is required to set the database credentials. `dev.env` can be copied into `.env` to create one.
-
 ### Production
 #### MariaDB  
   
@@ -90,7 +87,7 @@ sudo chown -R 33:33 /mnt/.ix-apps/app_mounts/wiki/wiki-images && sudo chmod -R 7
 ```
 
 ### development
-Again copy `dev.env` into `.env`  
+A file named `.env` is required to set the database credentials. `dev.env` can be copied into `.env` to create one.
 
 `docker compose --profile dev up`  
   
