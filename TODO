@@ -1,2 +1,19 @@
+Security
+
+Read the following security precautions to ensure that you wish to continue using this application.
+Container: [wiki]
+Running user/group(s)
+
+    User: unknown
+    Group: unknown
+    Supplementary Groups: apps
+
+Security option [no-new-privileges] is not set
+
+    Processes can gain additional privileges through setuid/setgid binaries
+    Can potentially allow privilege escalation attacks within the container
+
+Limit Resources
+
 Auto-update
 Auto backup
