@@ -126,7 +126,7 @@ $wgSecretKey = $envVariables['WIKI_SECRET_KEY'];
 $wgSessionSecret = $envVariables['WIKI_SESSION_SECRET'];
 
 # Changing this will log out all existing sessions.
-$wgAuthenticationTokenVersion = "1";
+$wgAuthenticationTokenVersion = "2";
 
 ## For attaching licensing metadata to pages, and displaying an
 ## appropriate copyright notice / icon. GNU Free Documentation
